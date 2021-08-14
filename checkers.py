@@ -25,16 +25,17 @@ import pandas as pd
 
 board = np.array(
     [[0, 2, 0, 2, 0, 2, 0, 2],
-    [2, 0, 2, 0, 2, 0, 2, 0],
-    [0, 2, 0, 2, 0, 2, 0, 2],
-    [" ", 0, " ", 0, " ", 0, " ", 0],
-    [0, " ", 0, " ", 0, " ", 0, " "],
-    [1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0]]
+     [2, 0, 2, 0, 2, 0, 2, 0],
+     [0, 2, 0, 2, 0, 2, 0, 2],
+     [" ", 0, " ", 0, " ", 0, " ", 0],
+     [0, " ", 0, " ", 0, " ", 0, " "],
+     [1, 0, 1, 0, 1, 0, 1, 0],
+     [0, 1, 0, 1, 0, 1, 0, 1],
+     [1, 0, 1, 0, 1, 0, 1, 0]]
 )
 
 boardSize = len(board[0])
+
 
 def printBoard(board):
     sp = ' ' * 3
@@ -45,19 +46,24 @@ def printBoard(board):
     print(board)
     print(refrence_line)
 
+
 def select(row0, col0):
     if (-1 < row0 < boardSize) and (-1 < col0 < boardSize):
         return row0, col0
     return False
 
+
 def isSpaceFree(row, col):
     return board[row][col] == " "
+
 
 def beating1(row, col, row0, col0, ur_le):
     return row - row0 == -2 and abs(col - col0) == 2 and board[(row + row0) // 2][(col + col0) // 2] == str(ur_le)
 
+
 def beating2(row, col, row0, col0, ur_le):
     return row - row0 == 2 and abs(col - col0) == 2 and board[(row + row0) // 2][(col + col0) // 2] == str(ur_le)
+
 
 def validMove1(row, col, row0, col0):
     prev = select(row0, col0)
@@ -71,10 +77,11 @@ def validMove1(row, col, row0, col0):
         return row == prev[0] - 1 and abs(col - prev[1]) == 1
     elif board[row0][col0] == "k1":
         if (board[(row + row0) // 2][(col + col0) // 2] == "2" or board[(row + row0) // 2][
-            (col + col0) // 2] == "k2") and abs(row - prev[0]) == 2 and abs(col - prev[1]) == 2:
+                (col + col0) // 2] == "k2") and abs(row - prev[0]) == 2 and abs(col - prev[1]) == 2:
             return "king beating"
         if abs(row - prev[0]) == 1 and abs(col - prev[1]) == 1:
             return "king move"
+
 
 def validMove2(row, col, row0, col0):
     prev = select(row0, col0)
@@ -88,10 +95,11 @@ def validMove2(row, col, row0, col0):
         return row == prev[0] + 1 and abs(col - prev[1]) == 1
     elif board[row0][col0] == "k2":
         if (board[(row + row0) // 2][(col + col0) // 2] == "1" or board[(row + row0) // 2][
-            (col + col0) // 2] == "k1") and abs(row - prev[0]) == 2 and abs(col - prev[1]) == 2:
+                (col + col0) // 2] == "k1") and abs(row - prev[0]) == 2 and abs(col - prev[1]) == 2:
             return "king beating"
         if abs(row - prev[0]) == 1 and abs(col - prev[1]) == 1:
             return "king move"
+
 
 def player1move(row, col, row0, col0):
     if bool(validMove1(row, col, row0, col0)):
@@ -109,6 +117,7 @@ def player1move(row, col, row0, col0):
     else:
         return "Invalid move!!"
 
+
 def player2move(row, col, row0, col0):
     if bool(validMove2(row, col, row0, col0)):
         if validMove2(row, col, row0, col0) == "beating and king" or validMove2(row, col, row0, col0) == "king beating":
@@ -125,11 +134,14 @@ def player2move(row, col, row0, col0):
     else:
         return "Invalid move!!"
 
+
 def is_king1(row, col):
     return row == 0 and col in [2 * jule + 1 for jule in range(boardSize // 2)]
 
+
 def is_king2(row, col):
     return row == boardSize - 1 and col in [2 * jule for jule in range(boardSize // 2)]
+
 
 def main():
     Player1 = input("\nEnter your name Player1: ")
@@ -205,6 +217,7 @@ def main():
             print(f"{Player2} wins")
             break
 
+
 def initiate():
 
     print("team checkers is glad to see you playing this game :)\n")
@@ -216,5 +229,6 @@ def initiate():
         main()
         print(pd.Timestamp.now() - start)
     print(f"Thank you :)")
+
 
 initiate()
